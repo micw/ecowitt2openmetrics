@@ -10,6 +10,7 @@ host = "0.0.0.0"
 port = 8081
 passkeys={}
 write_url=None
+debug=False
 
 def addMetric(metrics,data,source_key,factor,metric,tags=[]):
     if not source_key in data:
@@ -25,6 +26,8 @@ def fahrenheit_to_celsius(x):
     return (x-32)*5/9;    
 
 def handle_request(data):
+    if (debug):
+        pprint(data)
     passkey=data.get("PASSKEY")
     if not passkey:
         print("Missing PASSKEY")
@@ -105,5 +108,7 @@ if __name__ == "__main__":
 
     write_url=os.environ.get("WRITE_URL")
     print ("Using write URL: ",write_url)
+
+    debug=bool(os.environ.get("DEBUG","False"))
 
     start_webserver()
