@@ -61,6 +61,9 @@ def handle_request(data):
     addMetric(metrics,data,"solarradiation",1,"solar_radiation", { "sensor": sensor })
     addMetric(metrics,data,"uv",1,"uv_index", { "sensor": sensor })
 
+    addMetric(metrics,data,"wh65batt",1,"battery_state", { "sensor": sensor, "loc": "out" })
+
+    pprint(metrics)
     requests.post(write_url, data="\n".join(metrics))
 
     return True
@@ -110,5 +113,6 @@ if __name__ == "__main__":
     print ("Using write URL: ",write_url)
 
     debug=bool(os.environ.get("DEBUG","False"))
+    print ("Debug: ",debug)
 
     start_webserver()
