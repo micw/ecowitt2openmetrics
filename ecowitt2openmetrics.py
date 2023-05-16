@@ -65,7 +65,7 @@ def handle_request(data):
 class RequestHandler(SimpleHTTPRequestHandler):
     def do_POST(self):
 
-#        try:
+        try:
             content_len = int(self.headers.get('content-length', 0))
             post_body = self.rfile.read(content_len).decode("utf-8")
             data = dict(parse_qsl(post_body))
@@ -73,11 +73,10 @@ class RequestHandler(SimpleHTTPRequestHandler):
                 self.send_response(200, "OK")
             else:
                 self.send_error(403, 'Forbidden.')
-#        except:
-#            print("Unexpected error:", sys.exc_info()[0])
-#            self.send_error(400, 'Bad request.')
-#            return
-
+        except:
+            print("Unexpected error:", sys.exc_info()[0])
+            self.send_error(400, 'Bad request.')
+            return
 
 def start_webserver():
     webServer = HTTPServer((host, port), RequestHandler)
